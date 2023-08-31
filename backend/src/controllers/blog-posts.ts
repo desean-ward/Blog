@@ -13,26 +13,34 @@ export const getBlogPosts: RequestHandler = async (req, res, next) => {
 
 // Create a blog post interface
 interface BlogPostBody {
-  slug: string,
-  title: string,
-  summary: string,
-  body: string,
+  slug: string;
+  title: string;
+  summary: string;
+  body: string;
 }
 
-export const createBlogPost: RequestHandler<unknown, unknown, BlogPostBody, unknown> = async (req, res, next) => {
+export const createBlogPost: RequestHandler<
+  unknown,
+  unknown,
+  BlogPostBody,
+  unknown
+> = async (req, res, next) => {
   // Deconstruct to body of the request
   const { slug, title, summary, body } = req.body;
 
   try {
     // Create a new post from the request body
     const newPost = await BlogPostModel.create({
-      slug, title, summary, body
-    })
+      slug,
+      title,
+      summary,
+      body,
+    });
 
     // Status 201 indicates a new resource was created
-    res.status(201).json(newPost)
-    
+    res.status(201).json(newPost);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error });
   }
 };
