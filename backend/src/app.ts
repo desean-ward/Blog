@@ -7,11 +7,13 @@ import morgan from "morgan";
 
 const app = express();
 
+// Logging HTTP requests and responses 
 app.use(morgan("dev"));
 
 // Send a json body with request calls
 app.use(express.json());
 
+// Setup CORS
 app.use(
   cors({
     origin: env.WEBSITE_URL,

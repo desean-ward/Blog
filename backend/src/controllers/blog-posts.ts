@@ -1,10 +1,11 @@
 import { RequestHandler } from "express";
 import BlogPostModel from "../models/blog-post";
 
-export const getBlogPosts: RequestHandler = async (req, res, next) => {
+export const getBlogPosts: RequestHandler = async (req, res) => {
   try {
     // Get all blog posts
-    const allBlogPosts = await BlogPostModel.find().exec();
+    const allBlogPosts = await BlogPostModel.find().sort({ _id: -1 }).exec();
+    console.log(allBlogPosts);
     res.status(200).json(allBlogPosts);
   } catch (error) {
     res.status(500).json({ error });
@@ -24,7 +25,7 @@ export const createBlogPost: RequestHandler<
   unknown,
   BlogPostBody,
   unknown
-> = async (req, res, next) => {
+> = async (req, res) => {
   // Deconstruct to body of the request
   const { slug, title, summary, body } = req.body;
 
